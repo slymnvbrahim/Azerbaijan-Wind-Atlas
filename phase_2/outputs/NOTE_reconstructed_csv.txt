@@ -1,0 +1,3 @@
+candidate_sites.csv and accessibility_points.csv here were rebuilt with the same Phase 2 code and the same inputs
+(statistics match your Colab run: 251 sites, mean access 0.402, median 0.395, mean distance 10.5 km).
+Your own originals are in Colab: /content/phase2_out/ (if the session is still open). Replace these files with yours if you have them.

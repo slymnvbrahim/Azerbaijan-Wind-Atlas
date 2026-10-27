@@ -1,0 +1,3 @@
+Also needed (not copied, they are on your computer): the three Azerbaijan-wide Global Wind Atlas GeoTIFF files
+  AZE_wind-speed_50m.tif, AZE_wind-speed_100m.tif, AZE_wind-speed_150m.tif
+(downloaded from the Global Wind Atlas site; check the data terms before publishing).

@@ -1,0 +1,212 @@
+{
+ "version": 1,
+ "generated_utc": "2026-10-22T10:32:43Z",
+ "heights_m": [
+  50,
+  100,
+  150
+ ],
+ "unit": "m/s",
+ "layers": {
+  "50": {
+   "png": "wind_50m.png",
+   "grid": "wind_grid_50m.bin",
+   "stats_png_pixels": {
+    "min": 0.218,
+    "mean": 3.717,
+    "max": 17.492,
+    "share_above_vmax": 0.0022
+   },
+   "grid_bytes": 205686
+  },
+  "100": {
+   "png": "wind_100m.png",
+   "grid": "wind_grid_100m.bin",
+   "stats_png_pixels": {
+    "min": 0.455,
+    "mean": 4.253,
+    "max": 16.509,
+    "share_above_vmax": 0.0029
+   },
+   "grid_bytes": 205686
+  },
+  "150": {
+   "png": "wind_150m.png",
+   "grid": "wind_grid_150m.bin",
+   "stats_png_pixels": {
+    "min": 0.613,
+    "mean": 4.592,
+    "max": 15.774,
+    "share_above_vmax": 0.0043
+   },
+   "grid_bytes": 205686
+  }
+ },
+ "png": {
+  "crs": "EPSG:3857",
+  "width": 1862,
+  "height": 1457,
+  "pixel_size_m": 350,
+  "format": "indexed PNG (palette), palette index 255 = fully transparent (outside Azerbaijan / no data)",
+  "bounds_3857": {
+   "left": 4984000,
+   "bottom": 4634700,
+   "right": 5635700,
+   "top": 5144650
+  },
+  "bounds_lonlat": {
+   "west": 44.77203376051695,
+   "south": 38.39023109610275,
+   "east": 50.62635446712387,
+   "north": 41.89089480327207
+  },
+  "leaflet_bounds": [
+   [
+    38.39023109610275,
+    44.77203376051695
+   ],
+   [
+    41.89089480327207,
+    50.62635446712387
+   ]
+  ],
+  "note": "Image is gridded in EPSG:3857, so L.imageOverlay(url, leaflet_bounds) is geometrically exact."
+ },
+ "ramp": {
+  "stops": [
+   {
+    "v": 0,
+    "color": "#2c2f8f"
+   },
+   {
+    "v": 1,
+    "color": "#2f56c4"
+   },
+   {
+    "v": 2,
+    "color": "#2f8fd8"
+   },
+   {
+    "v": 3,
+    "color": "#2fc4dc"
+   },
+   {
+    "v": 4,
+    "color": "#35d0a8"
+   },
+   {
+    "v": 5,
+    "color": "#52c95a"
+   },
+   {
+    "v": 6,
+    "color": "#a4d63c"
+   },
+   {
+    "v": 7,
+    "color": "#f0e03a"
+   },
+   {
+    "v": 8,
+    "color": "#f5a52c"
+   },
+   {
+    "v": 9,
+    "color": "#e8452a"
+   },
+   {
+    "v": 10,
+    "color": "#8e24aa"
+   }
+  ],
+  "vmin": 0,
+  "vmax": 10.0,
+  "interpolation": "linear in RGB, 254 levels",
+  "above_vmax": "clamped to the last colour (10+ m/s)"
+ },
+ "grid": {
+  "crs": "EPSG:4326",
+  "dtype": "uint8",
+  "ncols": 586,
+  "nrows": 351,
+  "west": 44.77,
+  "north": 41.9,
+  "dlon": 0.01,
+  "dlat": 0.01,
+  "nodata": 255,
+  "scale": 17,
+  "offset": 0,
+  "decode": "value_ms = q / scale + offset; q == 255 means no data (outside outline)",
+  "layout": "raw row-major, rows north to south, columns west to east, no header",
+  "lookup": "col = floor((lon - west) / dlon); row = floor((north - lat) / dlat); byte index = row * ncols + col",
+  "resampling": "area average of the source raster; cells are kept only if their centre is inside the Natural Earth outline"
+ },
+ "source_rasters": {
+  "50": {
+   "file": "AZE_wind-speed_50m.tif",
+   "crs": "EPSG:4326",
+   "width": 2838,
+   "height": 1745,
+   "res": [
+    0.002500000000000001,
+    0.002500000000000001
+   ],
+   "nodata": "nan",
+   "dtype": "float32",
+   "bounds": [
+    44.74375000000009,
+    38.26374999999998,
+    51.83875000000009,
+    42.626249999999985
+   ]
+  },
+  "100": {
+   "file": "AZE_wind-speed_100m.tif",
+   "crs": "EPSG:4326",
+   "width": 2838,
+   "height": 1745,
+   "res": [
+    0.002500000000000001,
+    0.002500000000000001
+   ],
+   "nodata": "nan",
+   "dtype": "float32",
+   "bounds": [
+    44.74375000000009,
+    38.26374999999998,
+    51.83875000000009,
+    42.626249999999985
+   ]
+  },
+  "150": {
+   "file": "AZE_wind-speed_150m.tif",
+   "crs": "EPSG:4326",
+   "width": 2838,
+   "height": 1745,
+   "res": [
+    0.002500000000000001,
+    0.002500000000000001
+   ],
+   "nodata": "nan",
+   "dtype": "float32",
+   "bounds": [
+    44.74375000000009,
+    38.26374999999998,
+    51.83875000000009,
+    42.626249999999985
+   ]
+  }
+ },
+ "attribution": [
+  "Wind data: Global Wind Atlas (DTU / World Bank ESMAP)",
+  "Country outline: Natural Earth",
+  "Map tiles: Esri",
+  "Map data: (c) OpenStreetMap contributors"
+ ],
+ "licence_note": "Data licences are not asserted here; check the Global Wind Atlas terms before publishing.",
+ "disclaimer_en": "Wind speeds come from the Global Wind Atlas, which is not validated for Azerbaijan here. Capacity factors are gross (no wake, availability or electrical losses). Indicative only.",
+ "disclaimer_az": "Külək sürətləri Qlobal Külək Atlasından götürülüb və Azərbaycan üçün burada doğrulanmayıb. Tutum əmsalları brutto qiymətdir (izləmə, əlçatanlıq və elektrik itkiləri nəzərə alınmayıb). Yalnız istiqamətverici.",
+ "connection_note": "Indicative connection = straight line from each turbine to its nearest access point. It is NOT a real cable or road design.",
+ "cost_note_en": "Cost is in relative model units (not currency) from the optimiser cost model; it is an assumption-based proxy, not a real project cost. Model: 1.0 unit per turbine, tower surcharge 0 / 10 / 25 % for 50 / 100 / 150 m, road cost 0.02 units per km to the nearest access point.",
+ "cost_note_az": "Xərc nisbi model vahidlərindədir (valyuta deyil) və optimallaşdırıcının xərc modelindən gəlir; fərziyyəyə əsaslanan göstəricidir, real layihə xərci deyil. Model: hər turbin 1,0 vahid, qüllə əlavəsi 50 / 100 / 150 m üçün 0 / 10 / 25 %, yol xərci ən yaxın çıxış nöqtəsinə hər km üçün 0,02 vahid."
+}

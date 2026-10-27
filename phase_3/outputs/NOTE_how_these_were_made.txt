@@ -1,0 +1,3 @@
+These outputs come from running phase3_optimizer.py on the same inputs as your Colab run.
+The hypervolume numbers are identical to your Colab output (checked to 4 decimals).
+Files used by the website: best_compromise_10x.csv, pareto_solutions_10x.csv, site_turbine_table.csv.

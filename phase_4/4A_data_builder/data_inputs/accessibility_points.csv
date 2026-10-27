@@ -1,0 +1,8 @@
+id,type,lat,lon,note
+SUB01,substation,40.44806,49.46337,reconstructed from pasted Overpass table
+SUB02,substation,40.41827,49.66868,reconstructed from pasted Overpass table
+SUB07,substation,40.19034,49.43122,reconstructed from pasted Overpass table
+SUB04,substation,40.6694,49.48975,reconstructed from pasted Overpass table
+JCT10,road,40.5598,49.60605,reconstructed from pasted Overpass table
+JCT20,road,40.30766,49.59026,reconstructed from pasted Overpass table
+JCT06,road,40.47469,49.09604,reconstructed from pasted Overpass table

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="az">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azərbaycan Külək Atlası</title>
+  <meta name="description" content="Student project: small wind atlas for Azerbaijan. Not affiliated with the Global Wind Atlas, DTU or the World Bank.">
+  <!-- Leaflet is pinned to the exact version 1.9.4 (with SRI hashes) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-logo" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+      <circle cx="16" cy="14" r="2.4" fill="#fff"/>
+      <path d="M16 14 L16 3 M16 14 L25.5 19.5 M16 14 L6.5 19.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      <path d="M16 16 L16 29 M11 29 H21" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <div class="brand-text">
+      <h1 data-i18n="app.title">Azərbaycan Külək Atlası</h1>
+      <p class="subtitle" data-i18n="app.subtitle"></p>
+    </div>
+  </div>
+  <nav class="menu" aria-label="Main">
+    <button type="button" class="menu-btn" id="btn-about" data-i18n="menu.about"></button>
+    <button type="button" class="menu-btn" id="btn-methods" data-i18n="menu.methods"></button>
+    <!-- TODO: replace with your repository URL before publishing -->
+    <a class="menu-btn" id="link-github" href="https://github.com/YOUR-USER/YOUR-REPO" target="_blank" rel="noopener" data-i18n="menu.github"></a>
+    <div class="lang" role="group" data-i18n-aria="lang.aria">
+      <button type="button" data-lang="az" aria-pressed="true">AZ</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </nav>
+</header>
+
+<div class="banner" id="banner" role="note"></div>
+
+<div class="main">
+  <div class="mapwrap">
+    <div id="map" tabindex="-1"></div>
+    <div class="load-error" id="load-error" role="alert" hidden></div>
+
+    <!-- Left floating panel -->
+    <section class="panel-left" id="layers-panel" aria-labelledby="layers-title">
+      <button type="button" class="panel-head" id="layers-toggle" aria-expanded="true" aria-controls="layers-body" data-i18n-aria="panel.layersAria">
+        <span id="layers-title" data-i18n="panel.layers"></span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="panel-body" id="layers-body">
+        <fieldset>
+          <legend data-i18n="basemap.title"></legend>
+          <label><input type="radio" name="basemap" value="esri" checked> <span data-i18n="basemap.esri"></span></label>
+          <label><input type="radio" name="basemap" value="osm"> <span data-i18n="basemap.osm"></span></label>
+          <label><input type="radio" name="basemap" value="plain"> <span data-i18n="basemap.plain"></span></label>
+          <p class="small terms" data-i18n="basemap.terms"></p>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="wind.title"></legend>
+          <label><input type="checkbox" id="chk-wind" checked> <span data-i18n="wind.show"></span></label>
+          <label class="slider">
+            <span data-i18n="wind.opacity"></span>
+            <input type="range" id="rng-opacity" min="0" max="1" step="0.05" value="0.75">
+            <output id="out-opacity" for="rng-opacity"></output>
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="overlays.title"></legend>
+          <label><input type="checkbox" id="chk-outline" checked> <span data-i18n="overlays.outline"></span></label>
+          <label><input type="checkbox" id="chk-region" checked> <span data-i18n="overlays.region"></span></label>
+          <label><input type="checkbox" id="chk-sites"> <span data-i18n="overlays.sites"></span></label>
+        </fieldset>
+        <fieldset id="tower-legend">
+          <legend data-i18n="turbines.legend"></legend>
+          <ul id="tower-legend-list" class="tlist"></ul>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- Bottom right: height selector + legend -->
+    <div class="bottom-right">
+      <div class="heightsel" id="heightsel" role="radiogroup" data-i18n-aria="height.aria"></div>
+      <div class="legend" id="legend" role="img" data-i18n-aria="legend.aria">
+        <div class="legend-unit" data-i18n="legend.unit"></div>
+        <div class="legend-body">
+          <div class="legend-bar" id="legend-bar"></div>
+          <div class="legend-ticks" id="legend-ticks" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <aside class="panel-right" id="right-panel" aria-labelledby="right-title">
+    <div class="right-head">
+      <h2 id="right-title" data-i18n="panel.details"></h2>
+      <button type="button" class="right-toggle" id="right-toggle" aria-expanded="true" aria-controls="right-body" data-i18n-aria="panel.detailsAria"><span class="chev" aria-hidden="true"></span></button>
+    </div>
+    <div class="right-body" id="right-body">
+      <section class="card" aria-live="polite">
+        <h3 data-i18n="point.title"></h3>
+        <div id="point-panel"></div>
+      </section>
+      <section class="card" id="solutions-card">
+        <h3 id="sol-title"></h3>
+        <p class="small" data-i18n="solutions.info"></p>
+        <div id="sol-plot"></div>
+        <div class="plot-legend" id="sol-plot-legend"></div>
+        <div class="presets" id="presets" role="group" data-i18n-aria="presets.aria">
+          <button type="button" class="btn alt" data-preset="best" aria-pressed="false" data-i18n="preset.best"></button>
+          <button type="button" class="btn alt" data-preset="energy" aria-pressed="false" data-i18n="preset.energy"></button>
+          <button type="button" class="btn alt" data-preset="access" aria-pressed="false" data-i18n="preset.access"></button>
+          <button type="button" class="btn alt" data-preset="cost" aria-pressed="false" data-i18n="preset.cost"></button>
+        </div>
+        <div id="sol-objectives"></div>
+        <h4 class="tcard-sub" data-i18n="table.title"></h4>
+        <div class="tablewrap"><table id="sol-table" class="kv-table sol-table"></table></div>
+        <div class="dl-buttons">
+          <button type="button" class="btn" id="dl-csv" disabled data-i18n="dl.csv"></button>
+          <button type="button" class="btn" id="dl-geojson" disabled data-i18n="dl.geojson"></button>
+        </div>
+      </section>
+      <section class="card" id="turbine-card" hidden aria-live="polite">
+        <h3 data-i18n="turbine.title"></h3>
+        <div id="turbine-detail"></div>
+        <button type="button" class="btn" id="turbine-close" data-i18n="turbine.close"></button>
+      </section>
+      <section class="card">
+        <h3 data-i18n="regionCard.title"></h3>
+        <div id="region-card"></div>
+      </section>
+      <section class="card">
+        <h3 data-i18n="data.title"></h3>
+        <div id="data-card"></div>
+      </section>
+      <section class="card card-disabled" id="scenarios-card" aria-disabled="true">
+        <h3 data-i18n="scenarios.title"></h3>
+        <p class="small" data-i18n="scenarios.text"></p>
+        <button type="button" class="btn" disabled data-i18n="scenarios.button"></button>
+      </section>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer" id="footer"></footer>
+
+<dialog id="modal" aria-labelledby="modal-title">
+  <div class="modal-inner">
+    <h2 id="modal-title"></h2>
+    <div id="modal-content"></div>
+    <button type="button" class="modal-close" id="modal-close" data-i18n="modal.close"></button>
+  </div>
+</dialog>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

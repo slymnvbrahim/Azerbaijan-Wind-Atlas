@@ -1,0 +1,5 @@
+Raw data used in Phase 1 (not copied: 112 MB):
+  Kelmarsh wind farm open data, Cubico, Zenodo v4, licence CC-BY-4.0
+  https://zenodo.org/records/16807551
+  File used: Turbine_Data_Kelmarsh_2_2017 (Kelmarsh 2, Senvion MM92, rated 2050 kW, hub height 78.5 m, rotor 92 m)
+
